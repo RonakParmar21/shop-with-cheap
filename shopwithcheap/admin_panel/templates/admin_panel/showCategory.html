@@ -1,0 +1,43 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Django Project</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+  {% include 'admin_panel/navbar.html' %}
+
+    <main>
+        {% block content %}
+            <h1>This is show category</h1>
+        {% endblock %}
+    </main>
+
+    {% include 'admin_panel/footer.html' %}
+
+</body>
+</html>
+
+{% comment %} {% load static %}
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="{% static '/css/style.css' %}" />
+  </head>
+
+  <body>
+    {% include "navbar.html" %}
+    <div class="grid-container">
+        <a href="{% url "addcategory" %}"><div class="grid-item">Add Category</div></a>
+        <div class="grid-item">Box 2</div>
+        <div class="grid-item">Box 3</div>
+        <div class="grid-item">Box 4</div>
+    </div>
+    {% include "footer.html" %}
+    {% comment %} <div>Index page of admin</div> {% endcomment %
+  </body>
+</html> {% endcomment %}
