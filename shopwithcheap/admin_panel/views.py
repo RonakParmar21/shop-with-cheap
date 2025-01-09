@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect# type: ignore
 from django.http import HttpResponse# type: ignore
 from django.contrib.sessions.models import Session# type: ignore
 from django.contrib import messages# type: ignore
+from .models import AddCategory
 
 # Create your views here.
 def INDEX(request):
@@ -37,18 +38,30 @@ def LOGIN(request):
 
     return render(request, 'admin_panel/login.html')
 
-# def SIGNUP(request):
-#     return render(request, 'signup.html')
-
 def LOGOUT(request):
     if 'user_email' in request.session:
         del request.session['user_email']
     return redirect('login')
 
-def ADDCATEGORY(request):
-    return render(request, 'admin_panel/addCategory.html')
+# def ADDCATEGORY(request):
+#     return render(request, 'admin_panel/addCategory.html')
 
 def ADDSUBCATEGORY(request):
+    if 'user_email' not in request.session:
+        error_message = "You need to log in first to access this page."
+        return redirect('login')
+    
+    if request.method == 'POST':
+        category = request.POST.get('category')
+        subcategory = request.POST.get('subcategory')
+        
+        query = """
+            INSERT INTO admin_panel_addcategory (category, subcategory)
+            VALUES (%s, %s)
+        """
+        with connection.cursor() as cursor:
+            cursor.execute(query, [category, subcategory])
+        return render(request, 'admin_panel/addSubCategory.html', {'success': True})
     return render(request, 'admin_panel/addSubCategory.html')
 
 def ADDPRODUCT(request):
@@ -57,5 +70,22 @@ def ADDPRODUCT(request):
 def SHOWPRODUCT(request):
     return render(request, 'admin_panel/showProduct.html')
 
-def SHOWCATEGORY(request):
-    return render(request, 'admin_panel/showCategory.html')
+def SHOWSUBCATEGORY(request):
+    if 'user_email' not in request.session:
+        error_message = "You need to log in first to access this page."
+        return redirect('login')
+    
+    if request.method == "GET":
+        # category = AddCategory.objects.raw("SELECT DISTINCT * FROM admin_panel_addcategory")
+        category = AddCategory.objects.raw("""SELECT DISTINCT id, subcategory FROM admin_panel_addcategory """)
+
+
+
+        context = {
+            'category': category,
+            'user_email': request.session['user_email'], 
+        }
+        
+        return render(request, 'admin_panel/showSubCategory.html', context)
+
+    return render(request, 'admin_panel/showSubCategory.html')

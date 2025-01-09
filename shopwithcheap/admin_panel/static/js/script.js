@@ -29,10 +29,51 @@ function validateForm() {
 }
 
 // Event listener for form submission
+// document
+//   .getElementById("loginForm")
+//   .addEventListener("submit", function (event) {
+//     if (!validateForm()) {
+//       event.preventDefault();
+//     }
+//   });
+
+/**
+ *
+ * add sub category
+ *
+ */
+
 document
-  .getElementById("loginForm")
+  .getElementById("add-subcategory-form")
+  .addEventListener("click", () => console.log("Button click"));
+
+document
+  .getElementById("add-subcategory-form")
   .addEventListener("submit", function (event) {
-    if (!validateForm()) {
-      event.preventDefault();
+    event.preventDefault();
+
+    const category = document.getElementById("category-select").value;
+    const subcategory = document.getElementById("subcategory-input").value;
+
+    if (category && subcategory) {
+      alert(`Category: ${category}\nSubcategory: ${subcategory}`);
+      // Reset the form after submission
+      this.reset();
+    } else {
+      alert("Please fill in all fields.");
     }
   });
+
+/***
+ *
+ * success model popup
+ *
+ */
+document.addEventListener("DOMContentLoaded", function () {
+  const modal = document.getElementById("success-modal");
+  if (modal) {
+    setTimeout(() => {
+      modal.style.display = "none";
+    }, 3000);
+  }
+});
