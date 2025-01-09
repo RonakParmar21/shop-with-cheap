@@ -5,6 +5,9 @@ from django.http import HttpResponse# type: ignore
 from django.contrib.sessions.models import Session# type: ignore
 from django.contrib import messages# type: ignore
 from .models import AddCategory
+from django.http import JsonResponse
+import os
+from django.conf import settings
 
 # Create your views here.
 def INDEX(request):
@@ -65,8 +68,76 @@ def ADDSUBCATEGORY(request):
     return render(request, 'admin_panel/addSubCategory.html')
 
 def ADDPRODUCT(request):
-    return render(request, 'admin_panel/addProduct.html')
+    if 'user_email' not in request.session:
+        error_message = "You need to log in first to access this page."
+        return redirect('login')
 
+    subcategories = []
+    
+    if request.method == "POST" and request.FILES.get('image'):
+        category = request.POST.get('category')
+        subcategory = request.POST.get('subcategory')
+        product_name = request.POST.get('product')
+        product_price = request.POST.get('productprice')
+        image = request.FILES.get('image')
+
+        image_name = image.name
+        image_path = os.path.join('product', image_name)
+
+        with open(os.path.join(settings.MEDIA_ROOT, image_path), 'wb') as f:
+            for chunk in image.chunks():
+                f.write(chunk)
+
+        # Insert product into the database
+        query = """
+            INSERT INTO admin_panel_product (category, subcategory, product_title, product_image, product_price)
+            VALUES (%s, %s, %s, %s, %s)
+        """
+        with connection.cursor() as cursor:
+            cursor.execute(query, [category, subcategory, product_name, image_path, product_price])
+
+        return render(request, 'admin_panel/addProduct.html', {'success': True})
+
+    # Fetch all categories
+    query = "SELECT DISTINCT category FROM admin_panel_addcategory"
+    with connection.cursor() as cursor:
+        cursor.execute(query)
+        categories = cursor.fetchall()
+
+    # Check if category is selected and fetch corresponding subcategories
+    category_selected = request.GET.get('category', None)
+    if category_selected:
+        query = """
+            SELECT DISTINCT subcategory 
+            FROM admin_panel_addcategory 
+            WHERE category = %s
+        """
+        with connection.cursor() as cursor:
+            cursor.execute(query, [category_selected])
+            subcategories = cursor.fetchall()
+
+    context = {
+        'categories': [{'category': cat[0]} for cat in categories],
+        'subcategories': [{'subcategory': sub[0]} for sub in subcategories],
+    }
+
+    return render(request, 'admin_panel/addProduct.html', context)
+
+def GET_SUBCATEGORIES(request):
+    category = request.GET.get('category', None)
+    subcategories = []
+    
+    if category:
+        query = """
+            SELECT DISTINCT subcategory 
+            FROM admin_panel_addcategory 
+            WHERE category = %s
+        """
+        with connection.cursor() as cursor:
+            cursor.execute(query, [category])
+            subcategories = cursor.fetchall()
+    
+    return JsonResponse({'subcategories': [{'subcategory': sub[0]} for sub in subcategories]})
 def SHOWPRODUCT(request):
     return render(request, 'admin_panel/showProduct.html')
 
@@ -76,16 +147,43 @@ def SHOWSUBCATEGORY(request):
         return redirect('login')
     
     if request.method == "GET":
-        # category = AddCategory.objects.raw("SELECT DISTINCT * FROM admin_panel_addcategory")
-        category = AddCategory.objects.raw("""SELECT DISTINCT id, subcategory FROM admin_panel_addcategory """)
-
-
-
+        selected_category = request.GET.get('category', None)  # Get the category from the query parameters
+        
+        if selected_category:
+            # Filter subcategories based on the selected category
+            category = AddCategory.objects.raw("""
+                SELECT DISTINCT id, subcategory 
+                FROM admin_panel_addcategory 
+                WHERE category = %s
+            """, [selected_category])
+        else:
+            category = AddCategory.objects.raw("""
+                SELECT DISTINCT id, subcategory 
+                FROM admin_panel_addcategory
+            """)
+        
         context = {
             'category': category,
             'user_email': request.session['user_email'], 
         }
         
         return render(request, 'admin_panel/showSubCategory.html', context)
+
+    # if 'user_email' not in request.session:
+    #     error_message = "You need to log in first to access this page."
+    #     return redirect('login')
+    
+    # if request.method == "GET":
+    #     # category = AddCategory.objects.raw("SELECT DISTINCT * FROM admin_panel_addcategory")
+    #     category = AddCategory.objects.raw("""SELECT DISTINCT id, subcategory FROM admin_panel_addcategory """)
+
+
+
+    #     context = {
+    #         'category': category,
+    #         'user_email': request.session['user_email'], 
+    #     }
+        
+    #     return render(request, 'admin_panel/showSubCategory.html', context)
 
     return render(request, 'admin_panel/showSubCategory.html')

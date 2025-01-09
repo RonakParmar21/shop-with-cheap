@@ -16,9 +16,9 @@ class AddCategory(models.Model):
     category = models.CharField(max_length=255)
     subcategory=models.CharField(max_length=255)
 
-class Project(models.Model):
+class Product(models.Model):
     category = models.CharField(max_length=255)
     subcategory = models.CharField(max_length=255)
     product_title = models.CharField(max_length=255)
-    product_image = models.ImageField(upload_to='images/')
+    product_image = models.ImageField(upload_to='product/')
     product_price = models.IntegerField()

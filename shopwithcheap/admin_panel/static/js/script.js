@@ -77,3 +77,18 @@ document.addEventListener("DOMContentLoaded", function () {
     }, 3000);
   }
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+  // Event listener for category change
+  document.getElementById('category-select').addEventListener('change', function() {
+      const category = this.value;
+      
+      // Make an AJAX call to fetch subcategories based on selected category
+      fetch(`?category=${category}`)
+          .then(response => response.text())
+          .then(data => {
+              // Update subcategory dropdown options based on response data
+              document.getElementById('category-select-subcategory').innerHTML = data;
+          });
+  });
+});
