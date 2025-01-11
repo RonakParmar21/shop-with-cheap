@@ -11,7 +11,7 @@ urlpatterns = [
     # path('showcategory', admin_panel_views.SHOWCATEGORY, name="showcategory"),
     path('showsubcategory/', admin_panel_views.SHOWSUBCATEGORY, name="showsubcategory"),
     path('showproduct/', admin_panel_views.SHOWPRODUCT, name="showproduct"),
-
+    path('edit-subcategory/<str:id>/', admin_panel_views.EDITSUBCATEGORY, name='edit-subcategory'),
     # Add this line to handle the AJAX request for subcategories
     path('get-subcategories/', admin_panel_views.GET_SUBCATEGORIES, name='get_subcategories'),
 ]

@@ -22,11 +22,16 @@
           <tr>
             <th>Category</th>
             <th>Sub Category</th>
+            <th colspan="2">Action</th>
           </tr>
           {% for item in category %}
         <tr>
             <td>{{ item.category }}</td>
             <td>{{ item.subcategory }}</td>
+            <td>
+							<a href="../edit-subcategory-{{forloop.counter}}" class="edit" data-toggle="modal">Edit</a>
+							{% comment %} <a href="#deleteEmployeeModal-{{forloop.counter}}" class="delete" data-toggle="modal">Delete</a> {% endcomment %}
+						</td>
         </tr>
         {% endfor %}
 
@@ -39,22 +44,3 @@
 
 </body>
 </html>
-
-{% comment %} {% load static %}
-<html>
-  <head>
-    <link rel="stylesheet" type="text/css" href="{% static '/css/style.css' %}" />
-  </head>
-
-  <body>
-    {% include "navbar.html" %}
-    <div class="grid-container">
-        <a href="{% url "addcategory" %}"><div class="grid-item">Add Category</div></a>
-        <div class="grid-item">Box 2</div>
-        <div class="grid-item">Box 3</div>
-        <div class="grid-item">Box 4</div>
-    </div>
-    {% include "footer.html" %}
-    {% comment %} <div>Index page of admin</div> {% endcomment %
-  </body>
-</html> {% endcomment %}

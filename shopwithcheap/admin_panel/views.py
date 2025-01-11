@@ -26,7 +26,7 @@ def LOGIN(request):
 
         # Check if user exists using raw SQL
         with connection.cursor() as cursor:
-            cursor.execute("SELECT * FROM admin_user WHERE admin_email = %s", [email])
+            cursor.execute("SELECT * FROM admin_panel_user WHERE email = %s", [email])
             user = cursor.fetchone()
 
         if user:
@@ -187,3 +187,33 @@ def SHOWSUBCATEGORY(request):
     #     return render(request, 'admin_panel/showSubCategory.html', context)
 
     return render(request, 'admin_panel/showSubCategory.html')
+
+def EDITSUBCATEGORY(request, id):
+    if request.method == "GET":
+        return render(request, "admin_panel/addSubCategory.html")
+    if request.method == "POST":
+        category = request.POST.get('category')
+        subcategory = request.POST.get('subcategory')
+
+        with connection.cursor() as cursor:
+            cursor.execute("UPDATE admin_panel_addcategory SET category=%s, subcategory=%s where id = %s", [category, subcategory, id])
+
+        return redirect("home")
+    
+    with connection.cursor() as cursor:
+        cursor.execute("SELECT * FROM admin_panel_addcategory WHERE id = %s",[id])
+        row = cursor.fetchone()
+
+    if row:
+        category = {
+            'id':row[0],
+            'category': row[1],
+            'subcategory': row[2],
+        }
+    else :
+        category={}
+    context = {
+        'category': category
+    }
+    return render(request, 'admin_panel/addSubCategory.html', context)
+    
