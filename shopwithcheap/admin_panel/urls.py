@@ -1,4 +1,6 @@
 from django.urls import path
+from django.conf import settings
+from django.conf.urls.static import static
 from . import views as admin_panel_views
 
 urlpatterns = [
@@ -14,4 +16,4 @@ urlpatterns = [
     path('edit-subcategory/<str:id>/', admin_panel_views.EDITSUBCATEGORY, name='edit-subcategory'),
     # Add this line to handle the AJAX request for subcategories
     path('get-subcategories/', admin_panel_views.GET_SUBCATEGORIES, name='get_subcategories'),
-]
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

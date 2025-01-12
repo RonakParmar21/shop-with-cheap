@@ -2,42 +2,66 @@
 
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Simple Django Project</title>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-</head>
-<body>
-
-  {% include 'admin_panel/navbar.html' %}
+    <link rel="stylesheet" href="{% static '/css/style.css' %}" />
+  </head>
+  <body>
+    {% include 'admin_panel/navbar.html' %} {% if user_email %}
+    <p>Welcome, {{ user_email }}! You are logged in.</p>
+    {% endif %}
 
     <main>
-        {% block content %}
-            <h1>Show Product</h1>
-        {% endblock %}
+      {% block content %}
+      <table border="1">
+        <tr>
+          <th>Category</th>
+          <th>Sub Category</th>
+          <th>Product Name</th>
+          <th>Product Price</th>
+          <th>Product Image</th>
+          <th></th>
+          <th></th>
+          <th colspan="2">Action</th>
+        </tr>
+        {% for product in products %}
+        <tr>
+          <td>{{ product.category }}</td>
+          <td>{{ product.subcategory }}</td>
+          <td>{{ product.product_title }}</td>
+          <td>{{ product.product_price }}</td>
+          <td>
+            <img
+              src="{{ product.product_image.url }}"
+              alt="{{product.product_image.url}}"
+              style="width: 100px; height: 100px; margin-top: 10px"
+            />
+          </td>
+          <td>{{product.product_image}}</td>
+          <td>{{product.product_image.url}}</td>
+          <td>
+            <a
+              href="../edit-subcategory-{{ forloop.counter }}"
+              class="edit"
+              data-toggle="modal"
+              >Edit</a
+            >
+            <a href="{{ product.product_image.url }}"
+              >{{ product.product_image.url }}</a
+            >
+          </td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="6">No products available.</td>
+        </tr>
+        {% endfor %}
+      </table>
+      {% endblock %}
     </main>
 
     {% include 'admin_panel/footer.html' %}
-
-</body>
-</html>
-
-{% comment %} {% load static %}
-<html>
-  <head>
-    <link rel="stylesheet" type="text/css" href="{% static '/css/style.css' %}" />
-  </head>
-
-  <body>
-    {% include "navbar.html" %}
-    <div class="grid-container">
-        <a href="{% url "addcategory" %}"><div class="grid-item">Add Category</div></a>
-        <div class="grid-item">Box 2</div>
-        <div class="grid-item">Box 3</div>
-        <div class="grid-item">Box 4</div>
-    </div>
-    {% include "footer.html" %}
-    {% comment %} <div>Index page of admin</div> {% endcomment %
   </body>
-</html> {% endcomment %}
+</html>

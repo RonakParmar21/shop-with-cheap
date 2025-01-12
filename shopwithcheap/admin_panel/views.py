@@ -138,8 +138,47 @@ def GET_SUBCATEGORIES(request):
             subcategories = cursor.fetchall()
     
     return JsonResponse({'subcategories': [{'subcategory': sub[0]} for sub in subcategories]})
+
+from .models import Product
+
 def SHOWPRODUCT(request):
-    return render(request, 'admin_panel/showProduct.html')
+    # Check if the user is logged in
+    if 'user_email' not in request.session:
+        return redirect('login')
+    if request.method == "GET":
+        products = Product.objects.all()
+        
+        context = {
+            'products': products,
+            'user_email': request.session['user_email'],
+        }
+        return render(request, 'admin_panel/showProduct.html', context)
+
+    return render(request, 'admin_panel/addProduct.html')
+
+    # Get the selected category and subcategory (if provided)
+    # selected_category = request.GET.get('category', None)
+    # selected_subcategory = request.GET.get('subcategory', None)
+
+    # # Initialize an empty queryset for products
+    # products = Product.objects.all()
+
+    # # Filter products based on the selected category and subcategory
+    # if selected_category:
+    #     products = products.filter(category=selected_category)
+
+    # if selected_subcategory:
+    #     products = products.filter(subcategory=selected_subcategory)
+
+    # # Prepare the context with the products
+    # context = {
+    #     'products': products,  # Queryset of Product instances
+    #     'user_email': request.session['user_email'],  # User email in the session
+    # }
+
+    # # Render the template with the context
+    # return render(request, 'admin_panel/showProduct.html', context)
+
 
 def SHOWSUBCATEGORY(request):
     if 'user_email' not in request.session:
