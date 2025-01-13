@@ -1,0 +1,91 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Product</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function() {
+        // Detect when the category is changed
+        $('#category-select').change(function() {
+          var category = $(this).val();
+
+          // Send AJAX request to get subcategories based on the selected category
+          $.ajax({
+            url: "{% url 'get_subcategories' %}",
+            data: {
+              'category': category
+            },
+            dataType: 'json',
+            success: function(response) {
+              var subcategoryDropdown = $('#category-select-subcategory');
+              subcategoryDropdown.empty(); // Clear current subcategories
+
+              // Add a default "Select a subcategory" option
+              subcategoryDropdown.append('<option value="" disabled selected>Select a subcategory</option>');
+
+              // Add each subcategory option to the dropdown
+              $.each(response.subcategories, function(index, subcategory) {
+                subcategoryDropdown.append('<option value="' + subcategory.subcategory + '" {% if subcategory.subcategory == product.subcategory %}selected{% endif %}>' + subcategory.subcategory + '</option>');
+              });
+            }
+          });
+        });
+      });
+    </script>
+</head>
+<body>
+
+    {% include "admin/admin_navbar.html" %}
+
+    <main>
+        {% block content %}
+        <h1>Edit Product</h1>
+        
+        <div class="add-subcategory-form-container">
+            <form id="edit-product-form" method="POST" enctype="multipart/form-data">
+              {% csrf_token %}
+              
+              <label for="category-select" class="form-label-category">Category:</label>
+              <select id="category-select" name="category" class="dropdown-category" required>
+                <option value="" disabled>Select a category</option>
+                {% for cat in categories %}
+                    <option value="{{ cat.category }}" {% if cat.category == product.category %}selected{% endif %}>{{ cat.category }}</option>
+                {% endfor %}
+              </select>
+    
+              <label for="category-select-subcategory" class="form-label-category">Sub Category:</label>
+              <select id="category-select-subcategory" name="subcategory" class="dropdown-category" required>
+                <option value="" disabled selected>Select a subcategory</option>
+                {% for sub in subcategories %}
+                    <option value="{{ sub.subcategory }}" {% if sub.subcategory == product.subcategory %}selected{% endif %}>{{ sub.subcategory }}</option>
+                {% endfor %}
+              </select>
+    
+              <label for="product-title" class="form-label-subcategory">Product Title:</label>
+              <input type="text" id="product-title" name="product_title" class="textbox-subcategory" value="{{ product.product_title }}" required />
+    
+              <label for="product-price" class="form-label-subcategory">Product Price:</label>
+              <input type="text" id="product-price" name="product_price" class="textbox-subcategory" value="{{ product.product_price }}" required />
+    
+              <label for="product-image" class="form-label-subcategory">Product Image:</label>
+              <input name="product_image" type="file" id="product-image" class="form-control" accept="image/*">
+              <input type="hidden" name="existing_product_image" value="{{ product.product_image }}">
+              
+              <div>
+                <img src="{{ product.product_image }}" alt="Product Image" class="product-image-preview">
+              </div>
+    
+              <button type="submit" class="button-save-subcategory">Save Changes</button>
+            </form>
+          </div>
+
+        {% endblock %}
+    </main>
+   
+</body>
+</html>

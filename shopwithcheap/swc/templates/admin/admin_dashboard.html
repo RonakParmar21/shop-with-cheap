@@ -10,67 +10,37 @@
 </head>
 <body>
 
-    {% include 'admin/admin_navbar.html' %}
+    {% include "admin/admin_navbar.html" %}
 
     <main>
         {% block content %}
             <section class="hero">
-                {% comment %} <a href="{% url "addsubcategory" %}">
-
+                <a href="{% url "admin_addsubcategory" %}">
                     <div class="hero-box">
-                        <h2>Add Category</h2>
-                        <p>Content for Add Category...</p>
+                        <h2>Add Sub Category</h2>
+                        <p>Content for Add Sub Category</p>
                     </div>
-
                 </a>
-                <a href="{% url "addproduct" %}">
-
+                <a href="{% url "admin_addproduct" %}">
                     <div class="hero-box">
                         <h2>Add Product</h2>
                         <p>Content for Add Product</p>
                     </div>
-
                 </a>
-                <a href="{% url "showsubcategory" %}">
-
+                <a href="{% url "admin_showsubcategory" %}">
                     <div class="hero-box">
-                        <h2>Show Category</h2>
-                        <p>Content for Show Category</p>
+                        <h2>Show Sub Category</h2>
+                        <p>Content for Show Sub Category</p>
                     </div>
-
                 </a>
-                <a href="{% url "showproduct" %}">
-
+                <a href="{% url "admin_showproduct" %}">
                     <div class="hero-box">
                         <h2>Show Product</h2>
                         <p>Content for Show Product</p>
                     </div>
-
-                </a> {% endcomment %}
+                </a>
             </section>
         {% endblock %}
     </main>
-
-{% comment %} {% include 'admin_panel/footer.html' %} {% endcomment %}
-
 </body>
 </html>
-
-{% comment %} {% load static %}
-<html>
-  <head>
-    <link rel="stylesheet" type="text/css" href="{% static '/css/style.css' %}" />
-  </head>
-
-  <body>
-    {% include "navbar.html" %}
-    <div class="grid-container">
-        <a href="{% url "addcategory" %}"><div class="grid-item">Add Category</div></a>
-        <div class="grid-item">Box 2</div>
-        <div class="grid-item">Box 3</div>
-        <div class="grid-item">Box 4</div>
-    </div>
-    {% include "footer.html" %}
-    {% comment %} <div>Index page of admin</div> {% endcomment %
-  </body>
-</html> {% endcomment %}

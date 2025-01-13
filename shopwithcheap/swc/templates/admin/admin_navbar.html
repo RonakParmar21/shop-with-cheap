@@ -4,12 +4,12 @@
             <a href="/">ShopWithCheap</a>
         </div>
         <ul class="nav-links">
-            <li><a href="">Home</a></li>
-            <li><a href="">Add Subcategory</a></li>
-            <li><a href="">Show Subcategory</a></li>
-            <li><a href="">Add Product</a></li>
-            <li><a href="">Show Product</a></li>
-            <li><a href="">Logout</a></li>
+            <li><a href="{% url "custom_admin" %}">Home</a></li>
+            <li><a href="{% url "admin_addsubcategory" %}">Add Subcategory</a></li>
+            <li><a href="{% url "admin_showsubcategory" %}">Show Subcategory</a></li>
+            <li><a href="{% url "admin_addproduct" %}">Add Product</a></li>
+            <li><a href="{% url "admin_showproduct" %}">Show Product</a></li>
+            <li><a href="{% url "admin_logout" %}">Logout</a></li>
             {% comment %} <li><a href="{% url "home" %}">Home</a></li>
             <li><a href="{% url "addsubcategory" %}">Add Sub Category</a></li>
             <li><a href="{% url "showsubcategory" %}">Show Sub Category</a></li>

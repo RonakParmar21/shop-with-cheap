@@ -1,0 +1,60 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Django Project</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+    {% include "admin/admin_navbar.html" %}
+
+    <main>
+        {% block content %}
+        <div class="add-subcategory-form-container" id="add_subcategory">
+            <form id="add-subcategory-form" action="{% url "admin_addsubcategory" %}" method="POST">
+                <h1>Add Sub Category</h1>
+              {% csrf_token %}
+              <div class="input_field">
+                <label for="category-select" class="form-label-category"
+                >Category:</label
+              >
+              <select id="category-select" name="category" class="dropdown-category" required>
+                <option value="" disabled selected>Select a category</option>
+                <option value="Men">Men</option>
+                <option value="Women">Women</option>
+                <option value="Children">Children</option>
+              </select>
+              </div>
+
+    <div class="input_field">
+              <label for="subcategory-input" class="form-label-subcategory"
+                >Enter Subcategory:</label
+              >
+              <input
+                type="text"
+                id="subcategory-input"
+                name="subcategory"
+                class="textbox-subcategory"
+                placeholder="Enter subcategory"
+                required
+              />
+    </div>
+    <div class="input_field">
+              <button type="submit" class="button-save-subcategory">Save</button>
+</div>
+            </form>
+          </div>
+    
+          {% if success %}
+            <div id="success-modal" class="success-modal">
+                <p>Subcategory added successfully!</p>
+            </div>
+          {% endif %}
+        {% endblock %}
+    </main>
+</body>
+</html>

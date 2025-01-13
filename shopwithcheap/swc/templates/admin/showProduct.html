@@ -1,0 +1,61 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simple Django Project</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+  </head>
+  <body>
+    {% include "admin/admin_navbar.html" %}
+
+    <main>
+      {% block content %}
+      <h1>Manage Products</h1>
+      <table border="1">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Category</th>
+            <th>Subcategory</th>
+            <th>Product Title</th>
+            <th>Product Price</th>
+            <th>Product Image</th>
+            <th colspan="2">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for product in products %}
+          <tr>
+            <td>{{ product.id }}</td>
+            <td>{{ product.category }}</td>
+            <td>{{ product.subcategory }}</td>
+            <td>{{ product.product_title }}</td>
+            <td>{{ product.product_price }}</td>
+            <td>
+              <img
+                src="{{ product.product_image.url }}"
+                alt="Product Image"
+                width="100"
+              />
+            </td>
+            <td><a href="{% url 'edit_product' product.id %}">Edit</a></td>
+            <td>
+              <form
+                action="{% url 'delete_product' product.id %}"
+                method="post"
+              >
+                {% csrf_token %}
+                <button type="submit">Delete</button>
+              </form>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      {% endblock %}
+    </main>
+  </body>
+</html>
