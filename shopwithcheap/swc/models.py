@@ -17,3 +17,10 @@ class Product(models.Model):
     product_title = models.CharField(max_length=255)
     product_price = models.IntegerField()
     product_image = models.ImageField(upload_to="product/")
+
+class User(models.Model):
+    name = models.CharField(max_length=255)
+    email = models.EmailField(unique=True)
+    password = models.CharField(max_length=255)
+    def __str__(self):
+        return self.name

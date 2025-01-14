@@ -1,0 +1,12 @@
+<main>
+    <div class="grid-container">
+        {% for product in products %}
+        <div class="grid-item">
+            <img src="{{ product.image }}" alt="{{ product.title }}">
+            <h3>{{ product.title }}</h3>
+            <p>Price: ${{ product.price }}</p>
+            <button>Buy Now</button>
+        </div>
+        {% endfor %}
+    </div>
+</main>

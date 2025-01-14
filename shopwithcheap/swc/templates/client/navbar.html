@@ -1,0 +1,34 @@
+<header>
+  <!-- navbar.html -->
+  <nav class="navbar">
+    <div class="logo">Logo</div>
+    <ul class="nav-links">
+      {% for category, subcategories in categories.items %}
+      <li>
+        <a href="#">{{ category }}</a>
+        <div class="dropdown">
+          {% for subcategory in subcategories %}
+          <a href="#">{{ subcategory }}</a>
+          {% endfor %}
+        </div>
+      </li>
+      {% endfor %}
+    </ul>
+    <div class="auth-buttons">
+        {% if request.session.user_email %}
+          <!-- If the user is logged in, display the logout button -->
+          <a href="{% url 'logout' %}">
+            <button class="logout">Logout</button>
+          </a>
+        {% else %}
+          <!-- If the user is not logged in, display login and signup buttons -->
+          <a href="{% url 'signup' %}">
+            <button class="signup">Signup</button>
+          </a>
+          <a href="{% url 'login' %}">
+            <button class="signin">Signin</button>
+          </a>
+        {% endif %}
+      </div>
+  </nav>
+</header>

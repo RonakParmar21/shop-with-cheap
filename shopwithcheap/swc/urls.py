@@ -5,7 +5,12 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     # Client-side views
-    path('', views.INDEX, name="home"),  # Home page for clients
+    # path('', views.INDEX, name="home"),  
+    path('', views.home_view, name="home"),
+    path('signup/', views.register_user, name='signup'),
+    path('login/', views.login_user, name='login'), 
+    path('prodgrid/', views.prod_grid, name='prodgrid'),
+    path('logout/', views.logout_user, name='logout'),
 
     # Admin panel views
     path('admin-custom/', views.ADMININDEX, name="custom_admin"), 

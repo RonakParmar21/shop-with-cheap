@@ -1,3 +1,33 @@
-<h1>
-    client index
-</h1>
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Django Project</title>
+    <link rel="stylesheet" href="{% static 'css/client_style.css' %}">
+</head>
+<body>
+
+    {% include "client/navbar.html" %} 
+
+    <main>
+        {% block content %}
+            <div class="grid-container">
+                {% for product in products %}
+                <div class="grid-item">
+                    <img src="{{ product.image }}" alt="{{ product.title }}">
+                    <h3>{{ product.title }}</h3>
+                    <p>Price: ${{ product.price }}</p>
+                    <button>Buy Now</button>
+                </div>
+                {% endfor %}
+            </div>    
+
+            {% include "client/footer.html" %}
+        {% endblock %}
+    </main>
+   
+</body>
+</html>
