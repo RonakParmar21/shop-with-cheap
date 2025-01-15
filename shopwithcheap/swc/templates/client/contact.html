@@ -15,7 +15,17 @@
     <div style="margin-top:80px;">
     </div>
     <main>
-        <h1>Contact us
+        <h1>Contact Us</h1>
+        <form method="POST" action="{% url "contact" %}">
+            {% csrf_token %}
+            {% comment %} name, email, mobile, message {% endcomment %}
+            <input type="text" name="uname" placeholder="Enter your name" required />
+            <input type="email" name="email" placeholder="Enter your name" required />
+            <input type="mobile" name="mobile" placeholder="Enter your name" required />
+            <textarea name="message" required></textarea>
+            <input type="submit" value="Submit" />
+            
+        </form>
     </main>
 
     <!-- footer -->

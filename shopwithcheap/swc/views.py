@@ -431,6 +431,22 @@ def about(request):
     return render(request, 'client/about.html', {'categories': categories})
 
 def contact(request):
+    if request.method=="POST":
+        name = request.POST.get('uname')
+        email = request.POST.get('email')
+        mobile = request.POST.get('mobile')
+        message = request.POST.get('message')
+
+        query = """
+            INSERT INTO swc_contact(name, email, mobile, message) VALUES(%s, %s, %s, %s)
+        """
+
+        with connection.cursor() as cursor:
+            cursor.execute(query, [name, email, mobile, message])
+
+        categories = get_categories_and_subcategories()
+        return render(request, 'client/contact.html', {'categories': categories})
+
     categories = get_categories_and_subcategories()
     return render(request, 'client/contact.html', {'categories': categories})
 
