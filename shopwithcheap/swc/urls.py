@@ -14,6 +14,10 @@ urlpatterns = [
     path('contact/', views.contact, name='contact'),
     path('about/', views.about, name='about'),
     path('search-products/', views.searched_products, name='search_products'),
+    path('add-to-cart/<int:product_id>/', views.add_to_cart, name='add_to_cart'),
+    path('view-cart/', views.view_cart, name='view_cart'),
+    path('remove-from-cart/<int:item_id>/', views.remove_from_cart, name='remove_from_cart'),
+    path('update-quantity/<int:item_id>/', views.update_quantity, name='update_quantity'),
 
     # Admin panel views
     path('admin-custom/', views.ADMININDEX, name="custom_admin"), 

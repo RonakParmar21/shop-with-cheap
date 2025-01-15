@@ -20,6 +20,22 @@
     <main>
         <div class="product-grid">
             {% if products %}
+    {% for product in products %}
+        <div class="product-item">
+            <img src="{{ product.image }}" alt="{{ product.title }}">
+            <h3>{{ product.title }}</h3>
+            <p>Price: ${{ product.product_price }}</p>
+            <form action="{% url 'add_to_cart' product.id %}" method="POST">
+                {% csrf_token %}
+                <button type="submit">Add to Cart</button>
+            </form>
+        </div>
+    {% endfor %}
+{% else %}
+    <p>No products found for the selected category or subcategory.</p>
+{% endif %}
+
+            {% comment %} {% if products %}
                 {% for product in products %}
                     <div class="product-item">
                         <img src="{{ product.image }}" alt="{{ product.title }}">
@@ -29,7 +45,7 @@
                 {% endfor %}
             {% else %}
                 <p>No products found for the selected category or subcategory.</p>
-            {% endif %}
+            {% endif %} {% endcomment %}
         </div>
     </main>
 

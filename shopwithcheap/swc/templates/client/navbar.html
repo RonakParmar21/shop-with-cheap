@@ -3,6 +3,7 @@
   <nav class="navbar">
     <div class="logo"><a href='#'>Logo</a></div>
     <ul class="nav-links">
+      <li><a href='{% url "home" %}'>Home</a></li>
       {% for category, subcategories in categories.items %}
       <li>
         <a href="{% url 'search_products' %}?category={{ category }}">{{ category }}</a>
@@ -29,6 +30,9 @@
     <div class="auth-buttons">
         {% if request.session.user_email %}
           <!-- If the user is logged in, display the logout button -->
+          <a href="{% url "view_cart" %}">
+            <button class="logout">Cart</button>
+          </a>
           <a href="{% url 'logout' %}">
             <button class="logout">Logout</button>
           </a>

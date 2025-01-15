@@ -3,7 +3,8 @@ from django.db import connection
 from django.core.files.storage import FileSystemStorage
 from django.contrib import messages
 from django.http import JsonResponse
-from .models import Subcategory, User
+from .models import Subcategory, User, Cart, CartItem, Product
+from django.db.models import F
 from django.conf import settings
 import os
 
@@ -492,3 +493,55 @@ def searched_products(request):
         'categories': categories,
         'products': products,
     })
+
+
+def get_cart(request):
+    # Get the user's cart or create one if it doesn't exist
+    user_id = request.session.get('user_id')
+    if user_id:
+        cart, created = Cart.objects.get_or_create(user_id=user_id)
+        return cart
+    return None
+
+def add_to_cart(request, product_id):
+    cart = get_cart(request)
+    if cart:
+        product = Product.objects.get(id=product_id)
+        cart_item, created = CartItem.objects.get_or_create(cart=cart, product=product)
+        if not created:
+            cart_item.quantity = F('quantity') + 1  # Increment quantity if already exists
+            cart_item.save()
+        messages.success(request, f"{product.product_title} added to your cart.")
+    else:
+        messages.error(request, "You need to log in first.")
+    return redirect('home')
+
+def view_cart(request):
+    if request.method=="POST":
+        cart = get_cart(request)
+        if cart:
+            cart_items = CartItem.objects.filter(cart=cart)
+            total_price = sum(item.total_price() for item in cart_items)
+            categories = get_categories_and_subcategories()
+            return render(request, 'client/cart.html', {'cart_items': cart_items, 'total_price': total_price, 'categories':categories})
+    if request.method=="GET":
+        return render(request, 'client/cart.html')
+    
+    # return redirect('login')
+
+def remove_from_cart(request, item_id):
+    try:
+        cart_item = CartItem.objects.get(id=item_id)
+        cart_item.delete()
+        messages.success(request, "Item removed from cart.")
+    except CartItem.DoesNotExist:
+        messages.error(request, "Item not found.")
+    return redirect('view_cart')
+
+def update_quantity(request, item_id):
+    cart_item = CartItem.objects.get(id=item_id)
+    new_quantity = int(request.POST['quantity'])
+    if new_quantity > 0:
+        cart_item.quantity = new_quantity
+        cart_item.save()
+    return redirect('view_cart')

@@ -30,3 +30,16 @@ class Contact(models.Model):
     email = models.EmailField()
     mobile = models.BigIntegerField()
     message = models.CharField(max_length=255)
+
+class Cart(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)  # Use Django's built-in User model
+    created_at = models.DateTimeField(auto_now_add=True)
+
+class CartItem(models.Model):
+    cart = models.ForeignKey(Cart, related_name='items', on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField(default=1)
+    added_at = models.DateTimeField(auto_now_add=True)
+
+    def total_price(self):
+        return self.product.product_price * self.quantity

@@ -1,0 +1,44 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Cart</title>
+    <link rel="stylesheet" href="{% static 'css/client_style.css' %}">
+</head>
+<body>
+
+    {% include "client/navbar.html" %}
+
+    <div style="margin-top:80px;">
+        <h1>Your Cart</h1>
+    </div>
+
+    <main>
+        <div class="cart-items">
+            {% for item in cart_items %}
+                <div class="cart-item">
+                    <img src="{{ item.product.product_image }}" alt="{{ item.product.product_title }}">
+                    <h3>{{ item.product.product_title }}</h3>
+                    <p>Price: ${{ item.product.product_price }}</p>
+                    <form action="{% url 'update_quantity' item.id %}" method="POST">
+                        {% csrf_token %}
+                        <input type="number" name="quantity" value="{{ item.quantity }}" min="1" />
+                        <button type="submit">Update Quantity</button>
+                    </form>
+                    <a href="{% url 'remove_from_cart' item.id %}">Remove</a>
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="total-price">
+            <p>Total: ${{ total_price }}</p>
+            <button>Proceed to Checkout</button>
+        </div>
+    </main>
+
+    {% include "client/footer.html" %}
+</body>
+</html>
