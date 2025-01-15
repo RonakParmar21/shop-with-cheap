@@ -11,6 +11,9 @@ urlpatterns = [
     path('login/', views.login_user, name='login'), 
     path('prodgrid/', views.prod_grid, name='prodgrid'),
     path('logout/', views.logout_user, name='logout'),
+    path('contact/', views.contact, name='contact'),
+    path('about/', views.about, name='about'),
+    path('search-products/', views.searched_products, name='search_products'),
 
     # Admin panel views
     path('admin-custom/', views.ADMININDEX, name="custom_admin"), 

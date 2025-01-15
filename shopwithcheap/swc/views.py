@@ -289,6 +289,7 @@ def DELETEPRODUCT(request, product_id):
 
 
 
+
 # client side views :- 
 def get_categories_and_subcategories():
     query = """
@@ -366,7 +367,8 @@ def register_user(request):
             messages.error(request, f"Error: {str(e)}")
             return redirect('signup')  # Stay on signup page if there was an error
     
-    return render(request, 'client/signup.html')
+    categories = get_categories_and_subcategories()
+    return render(request, 'client/signup.html', {'categories': categories})
 
 def check_user_credentials(email, password):
     query = """
@@ -405,8 +407,9 @@ def login_user(request):
             # If login fails, show an error message
             messages.error(request, "Invalid email or password.")
             return redirect('login')  # Redirect back to the login page
-    
-    return render(request, 'client/login.html')
+    categories = get_categories_and_subcategories()
+    # return render(request, 'client/contact.html', {'categories': categories})
+    return render(request, 'client/login.html', {'categories': categories})
 
 def prod_grid(request):
     if 'user_email' not in request.session:
@@ -420,5 +423,56 @@ def prod_grid(request):
 def logout_user(request):
     if 'user_id' in request.session:
         del request.session['user_id']
-        del request.session['user_email']  # Clear user email from session if stored
-    return redirect('login')
+        del request.session['user_email']  
+    return redirect('home')
+
+def about(request):
+    categories = get_categories_and_subcategories()
+    return render(request, 'client/about.html', {'categories': categories})
+
+def contact(request):
+    categories = get_categories_and_subcategories()
+    return render(request, 'client/contact.html', {'categories': categories})
+
+
+def searched_products(request):
+    if 'user_email' not in request.session:
+        # error_message = "You need to log in first to access this page."
+        return redirect('login')
+    # Get query parameters for filtering
+    category_filter = request.GET.get('category')
+    subcategory_filter = request.GET.get('subcategory')
+
+    # Fetch categories and subcategories for the navbar
+    categories = get_categories_and_subcategories()
+
+    # Build query dynamically to filter products
+    query = "SELECT id, product_title, product_price, product_image FROM swc_product WHERE 1=1"
+    params = []
+
+    if category_filter:
+        query += " AND category = %s"
+        params.append(category_filter)
+
+    if subcategory_filter:
+        query += " AND subcategory = %s"
+        params.append(subcategory_filter)
+
+    query += " ORDER BY id ASC"
+
+    # Execute the query
+    with connection.cursor() as cursor:
+        cursor.execute(query, params)
+        rows = cursor.fetchall()
+
+    # Map the rows into a dictionary
+    products = [
+        {'id': row[0], 'title': row[1], 'price': row[2], 'image': row[3]}
+        for row in rows
+    ]
+
+    # Render the searchedProduct.html template
+    return render(request, 'client/searchedProduct.html', {
+        'categories': categories,
+        'products': products,
+    })
