@@ -6,6 +6,7 @@ from django.http import JsonResponse
 from .models import Subcategory, User, Cart, CartItem, Product
 from django.db.models import F
 from django.conf import settings
+from django.db.models import Sum
 import os
 
 # Client-side view
@@ -382,34 +383,27 @@ def check_user_credentials(email, password):
     
     return user
 
-# Login view to handle authentication and session creation
 def login_user(request):
     if request.method == 'POST':
         email = request.POST['email']
         password = request.POST['password']
 
-        # Check if the email and password match a user
+       
         user = check_user_credentials(email, password)
         
         if user:
-            # Create a session for the logged-in user
-            request.session['user_id'] = user[0]  # Assuming the user ID is the first column in the user tuple
-            request.session['user_email'] = email  # Store email in session (optional)
-
-            # Update session expiry time (optional)
-            # request.session.set_expiry(3600)  # 1 hour session expiry
-
-            # Success message
+           
+            request.session['user_id'] = user[0] 
+            request.session['user_email'] = email 
             messages.success(request, "Login successful!")
             
-            # Redirect to home page or dashboard
-            return redirect('home')  # Change 'home' to your actual home page URL name
+           
+            return redirect('home')  
         else:
-            # If login fails, show an error message
+            
             messages.error(request, "Invalid email or password.")
-            return redirect('login')  # Redirect back to the login page
+            return redirect('login') 
     categories = get_categories_and_subcategories()
-    # return render(request, 'client/contact.html', {'categories': categories})
     return render(request, 'client/login.html', {'categories': categories})
 
 def prod_grid(request):
@@ -509,25 +503,117 @@ def add_to_cart(request, product_id):
         product = Product.objects.get(id=product_id)
         cart_item, created = CartItem.objects.get_or_create(cart=cart, product=product)
         if not created:
-            cart_item.quantity = F('quantity') + 1  # Increment quantity if already exists
+            cart_item.quantity = F('quantity') + 1 
             cart_item.save()
         messages.success(request, f"{product.product_title} added to your cart.")
     else:
         messages.error(request, "You need to log in first.")
     return redirect('home')
 
+
+# def view_cart(request):
+#     user_id = request.session.get('user_id')  # Retrieve the logged-in user's ID from the session
+
+#     if user_id:
+#         try:
+#             cart = None
+#             cart_items = []
+#             total_price = 0
+            
+#             # Fetch the cart associated with the user
+#             with connection.cursor() as cursor:
+#                 cursor.execute("SELECT id FROM swc_cart WHERE user_id = %s", [user_id])
+#                 cart = cursor.fetchone()  # Fetch the cart ID
+
+#             if cart:
+#                 cart_id = cart[0]  # Assuming the first column is the cart ID
+                
+#                 # Fetch cart items for this cart
+#                 with connection.cursor() as cursor:
+#                     cursor.execute("""
+#                         SELECT ci.id, ci.quantity, ci.added_at, ci.product_id, p.name, p.price
+#                         FROM swc_cartitem ci
+#                         JOIN swc_product p ON ci.product_id = p.id
+#                         WHERE ci.cart_id = %s
+#                     """, [cart_id])
+#                     cart_items = cursor.fetchall()
+
+#                 # Calculate the total price
+#                 with connection.cursor() as cursor:
+#                     cursor.execute("""
+#                         SELECT SUM(ci.quantity * p.price)
+#                         FROM swc_cartitem ci
+#                         JOIN swc_product p ON ci.product_id = p.id
+#                         WHERE ci.cart_id = %s
+#                     """, [cart_id])
+#                     total_price = cursor.fetchone()[0] or 0  # Default to 0 if no items
+
+#             # Fetch categories
+#             with connection.cursor() as cursor:
+#                 cursor.execute("SELECT id, name FROM swc_subcategory")  # Adjust as per your schema
+#                 categories = cursor.fetchall()
+
+#             # Prepare cart items data for rendering
+#             cart_items_data = [
+#                 {
+#                     'id': item[0],
+#                     'quantity': item[1],
+#                     'added_at': item[2],
+#                     'product_id': item[3],
+#                     'product_name': item[4],
+#                     'price': item[5],
+#                 }
+#                 for item in cart_items
+#             ]
+
+#             return render(request, 'client/cart.html', {
+#                 'cart_items': cart_items_data,
+#                 'total_price': total_price,
+#                 'categories': categories,
+#             })
+
+#         except Exception as e:
+#             # Log or print the error for debugging
+#             print(f"Error fetching cart data: {e}")
+
+#     # If no user ID or cart found, return an empty cart view
+#     return render(request, 'client/cart.html', {
+#         'cart_items': [],
+#         'total_price': 0,
+#         'categories': []
+#     })
+
 def view_cart(request):
-    if request.method=="POST":
-        cart = get_cart(request)
+    user_id = request.session.get('user_id')  # Retrieve the logged-in user's ID from the session
+
+    if user_id:
+        # Fetch the cart associated with the logged-in user
+        cart = Cart.objects.filter(user_id=user_id).first()
+        
         if cart:
+            # Fetch cart items for the user's cart
             cart_items = CartItem.objects.filter(cart=cart)
-            total_price = sum(item.total_price() for item in cart_items)
+
+            # Calculate the total price using Django's ORM
+            total_price = cart_items.aggregate(total_price=Sum('quantity'))['total_price'] or 0
+
             categories = get_categories_and_subcategories()
-            return render(request, 'client/cart.html', {'cart_items': cart_items, 'total_price': total_price, 'categories':categories})
-    if request.method=="GET":
-        return render(request, 'client/cart.html')
-    
-    # return redirect('login')
+
+            return render(request, 'client/cart.html', {
+                'cart_items': cart_items,
+                'total_price': total_price,
+                'categories': categories
+            })
+
+    # If no cart exists for the user, return an empty cart view
+    return render(request, 'client/cart.html', {
+        'cart_items': [],
+        'total_price': 0,
+        'categories': get_categories_and_subcategories()
+    })
+
+
+
 
 def remove_from_cart(request, item_id):
     try:

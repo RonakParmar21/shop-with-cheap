@@ -32,7 +32,7 @@ class Contact(models.Model):
     message = models.CharField(max_length=255)
 
 class Cart(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)  # Use Django's built-in User model
+    user = models.ForeignKey(User, on_delete=models.CASCADE)  
     created_at = models.DateTimeField(auto_now_add=True)
 
 class CartItem(models.Model):
