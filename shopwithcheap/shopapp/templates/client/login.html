@@ -1,0 +1,47 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Shop With Cheap</title>
+    <link rel="stylesheet" href="{% static "client/css/style.css" %}">
+</head>
+<body>
+    {% include "client/navbar.html" %}
+    <div class="login-wrapper">
+        <div class="center-div">
+            <h2>Login</h2>
+            
+
+        </div>
+    </div>
+    {% include "client/footer.html" %}
+
+    {% comment %} {% include "client/navbar.html" %} {% endcomment %}
+
+    {% comment %} <div class="login-container"> {% endcomment %}
+        {% comment %} {% include "client/navbar.html" %} {% endcomment %}
+    {% comment %} </div> {% endcomment %}
+
+    {% comment %} <main>
+        <div class="login-container">
+            <h2>Login</h2>
+            <form method="POST">
+                {% csrf_token %}
+                <div class="input-group">
+                    <label for="email">Email:</label>
+                    <input type="email" name="email" id="email" required>
+                </div>
+                <div class="input-group">
+                    <label for="password">Password:</label>
+                    <input type="password" name="password" id="password" required>
+                </div>
+                <button type="submit">Login</button>
+            </form>
+        </div>
+    </main> {% endcomment %}
+
+</body>
+</html>

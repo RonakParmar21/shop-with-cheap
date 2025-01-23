@@ -1,0 +1,22 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop With Cheap</title>
+    <link rel="stylesheet" href="{% static "client/css/style.css" %}">
+</head>
+<body>
+    {% include "client/navbar.html" %}
+    {% comment %} <div class="sliderdiv"> {% endcomment %}
+    {% include "client/slider.html" %}
+    {% comment %} </div> {% endcomment %}
+    <section>
+
+    </section>
+    {% include "client/footer.html" %}
+    <script src="{% static "client/js/script.js" %}"></script>
+</body>
+</html>
