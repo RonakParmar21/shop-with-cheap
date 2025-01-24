@@ -1,0 +1,22 @@
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+  integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer"
+/>
+<nav>
+  <h1><a href="{% url "home" %}">SWC</a></h1>
+  <i class="fa-solid fa-times" id="cross"></i>
+  <i class="fa-solid fa-bars" id="bar"></i>
+  <ul>
+    <li><a href="#">Dashboard</a></li>
+    <li><a href="{% url "addcategory" %}">Add Category</a></li>
+    <li><a href="#">Show Category</a></li>
+    <li><a href="#">Add SubCategory</a></li>
+    <li><a href="#">Show SubCategory</a></li>
+    <li><a href="#">Add Product</a></li>
+    <li><a href="#">Show Product</a></li>
+    <li><a href="">Logout</a></li>
+  </ul>
+</nav>

@@ -235,16 +235,84 @@ footer .bottom ul {
 .login-wrapper {
   display: grid;
   place-items: center;
-  height: 50vh;
+  /* height: 50vh; */
   background-color: #f0f0f0;
 }
 .center-div {
-  width: 200px;
-  height: 200px;
-  background-color: #2ecc71;
+  margin-top: 100px;
+  margin-bottom: 40px;
+  width: 600px;
+  height: 400px;
+  background-color: #4a628a;
   color: white;
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 8px;
+  padding: 10px 0;
+}
+
+.center-div-one {
+  margin-top: 100px;
+  margin-bottom: 40px;
+  width: 600px;
+  height: 650px;
+  background-color: #4a628a;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+  padding: 10px 0;
+}
+
+.center-div form,
+.center-div-one form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  /* justify-content: center; */
+  /* align-items: center; */
+}
+
+.input-field {
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  /* align-items: center; */
+  flex-wrap: wrap;
+  /* width: 100%; */
+}
+
+form h2 {
+  text-decoration: underline;
+  font-size: 2rem;
+  text-align: center;
+}
+
+.input-field label,
+.input-field input {
+  font-size: 1.5rem;
+  width: 400px;
+}
+
+.input-field input {
+  border: none;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+form button {
+  padding: 10px;
+  border: none;
+  border-radius: 10px;
+  color: #4a628a;
+  font-size: 1.5rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+form a {
+  text-align: center;
+  font-size: 1.4rem;
 }

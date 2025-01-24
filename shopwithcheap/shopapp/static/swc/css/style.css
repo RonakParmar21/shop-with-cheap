@@ -1,0 +1,134 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Roboto", serif;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 70px;
+  padding: 10px 5%;
+  z-index: 999;
+  background-color: #141d28;
+  color: white;
+  width: 100vw;
+  position: fixed;
+}
+
+nav h1 a {
+  margin: 0;
+  text-decoration: none;
+  color: #fff;
+  font-size: 1.8rem;
+}
+
+nav ul {
+  display: flex;
+  list-style: none;
+  gap: 20px;
+  padding: 0;
+  margin: 0;
+}
+
+nav ul li a {
+  color: white;
+  text-decoration: none;
+  font-size: 1rem;
+}
+
+#cross,
+#bar {
+  font-size: 2rem;
+  display: none;
+  cursor: pointer;
+  color: white;
+  position: absolute;
+  right: 20px;
+}
+
+@media (max-width: 1200px) {
+  nav ul {
+    display: none;
+    flex-direction: column;
+    gap: 10px;
+    background-color: #141d28;
+    position: absolute;
+    top: 80px;
+    right: 0;
+    padding: 10px;
+    width: 200px;
+    border-radius: 5px;
+  }
+
+  nav ul.show-menu {
+    display: flex;
+  }
+
+  #bar {
+    display: block;
+  }
+}
+
+.form-container .center-div {
+  display: flex;
+  justify-content: center;
+  padding: 200px;
+}
+
+.form-container .center-div form {
+  width: 400px;
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: center;
+  /* border: 1px solid black; */
+  padding: 20px 0;
+  gap: 20px;
+  background-color: gainsboro;
+  border-radius: 10px;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+.form-container .center-div form h2 {
+  text-decoration: underline;
+  color: #141d28;
+  font-size: 2rem;
+}
+
+.form-container .center-div form .input-field {
+  display: flex;
+  flex-direction: column;
+  color: #141d28;
+  flex-wrap: wrap;
+}
+
+.form-container .center-div form .input-field label,
+.form-container .center-div form .input-field input {
+  font-size: 1.5rem;
+  padding: 5px;
+}
+
+.form-container .center-div form button {
+  padding: 10px;
+  background-color: #141d28;
+  color: #fff;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 5px;
+}
+
+.form-container .center-div form a {
+  display: flex;
+  text-align: center;
+  color: #141d28;
+  text-decoration: none;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+

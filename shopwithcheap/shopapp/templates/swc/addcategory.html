@@ -1,0 +1,36 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Shop With Cheap</title>
+    <link rel="stylesheet" href="{% static "swc/css/style.css" %}">
+</head>
+<body>
+    <script>
+        {% if message %}
+            alert("{{ message }}");
+        {% endif %}
+    </script>
+
+    {% include "swc/navbar.html" %}
+    <div class="form-container">
+        <div class="center-div">
+            <form method="POST" {% url "addcategory" %}>
+                {% csrf_token %}
+                <h2>Add Category</h2>
+                <div class="input-field">
+                    <label for="addcategory">Enter Category Name : </label>
+                    <input type="text" name="addcategory" id="addcategory" placeholder="Enter category name" required />
+                </div>
+                <button type="submit">Add Category</button>
+                <a href="">View Category</a>
+            </form>
+
+        </div>
+    </div>
+    <script src="{% static "swc/js/script.js" %}"></script>
+</body>
+</html>
