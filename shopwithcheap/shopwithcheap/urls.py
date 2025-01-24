@@ -9,6 +9,10 @@ urlpatterns = [
 
     path('swc/', views.AdminLogin, name="adminlogin"),
     path('swc/dashboard/', views.AdminDashboard, name="admindashboard"),
-    path('swc/addcategory', views.AddCategory, name="addcategory"),
+    path('swc/addcategory/', views.AddCategory, name="addcategory"),
+    path('swc/addsubcategory/', views.AddSubCategory, name="addsubcategory"),
+    path('swc/addproduct/', views.AddProduct, name="addproduct"),
+    path('get_subcategories/', views.get_subcategories, name='get_subcategories'),
+
 
 ]

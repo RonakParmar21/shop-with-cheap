@@ -77,17 +77,18 @@ nav ul li a {
 .form-container .center-div {
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
   padding: 200px;
 }
 
 .form-container .center-div form {
-  width: 400px;
-  height: 400px;
+  width: 600px;
+  /* max-width: 600px; */
+  /* min-width: 300px; */
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
   align-items: center;
-  /* border: 1px solid black; */
   padding: 20px 0;
   gap: 20px;
   background-color: gainsboro;
@@ -109,9 +110,12 @@ nav ul li a {
 }
 
 .form-container .center-div form .input-field label,
-.form-container .center-div form .input-field input {
+.form-container .center-div form .input-field input,
+.form-container .center-div form .input-field select,
+.form-container .center-div form .input-field textarea {
   font-size: 1.5rem;
   padding: 5px;
+  min-width: 500px;
 }
 
 .form-container .center-div form button {
@@ -121,6 +125,7 @@ nav ul li a {
   font-size: 1.2rem;
   border: none;
   border-radius: 5px;
+  cursor: pointer;
 }
 
 .form-container .center-div form a {

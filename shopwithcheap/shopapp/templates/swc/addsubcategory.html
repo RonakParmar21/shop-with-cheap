@@ -1,0 +1,45 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SWC - Add Sub Category</title>
+    <link rel="stylesheet" href="{% static "swc/css/style.css" %}">
+</head>
+<body>
+    <script>
+        {% if success %}
+            alert("Subcategory added successfully!");
+        {% endif %}
+    </script>
+
+    {% include "swc/navbar.html" %}
+    <div class="form-container">
+        <div class="center-div">
+            <form method="POST" {% url "addcategory" %}>
+                {% csrf_token %}
+                <h2>Add Sub Category</h2>
+                <div class="input-field">
+                    <label for="category">Select Category:</label>
+                    <select name="category" id="category" required>
+                        <option value="" disabled selected>-- Select Category --</option>
+                        {% for category in categories %}
+                            <option value="{{ category }}">{{ category }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="input-field">
+                    <label for="subcategory">Enter Subcategory Name:</label>
+                    <input type="text" name="subcategory" id="subcategory" placeholder="Enter subcategory name" required>
+                </div>
+                <button type="submit">Add Subcategory</button>
+                <a href="">View Subcategories</a>
+            </form>
+
+        </div>
+    </div>
+    <script src="{% static "swc/js/script.js" %}"></script>
+</body>
+</html>
