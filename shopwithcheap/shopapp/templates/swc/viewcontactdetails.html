@@ -1,0 +1,39 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static "swc/css/style.css" %}" >
+</head>
+<body>
+    <div>
+        {% include "swc/navbar.html" %}
+    </div>
+
+    <div class="container">
+        <table>
+            <tr>
+                <th>User Name</th>
+                <th>User Email</th>
+                <th>User Mobile</th>
+                <th>Message</th>
+                <th>Action</th>
+            </tr>
+            {% for contact in contacts %}
+            <tr>
+                <td>{{contact.name}}</td>
+                <td>{{contact.email}}</td>
+                <td>{{contact.mobile}}</td>
+                <td>{{contact.message}}</td>
+                <td><a href=""><i class="fa-solid fa-trash"></i></a></td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <script src="{% static "swc/js/script.css" %}"></script>
+</body>
+</html>

@@ -137,3 +137,120 @@ nav ul li a {
   font-weight: 700;
 }
 
+.container {
+  padding-top: 120px;
+  margin: 0 auto;
+  width: 80%;
+  /* max-width: 1200px; */
+  background: #fff;
+  padding-bottom: 200px;
+  border-radius: 10px;
+}
+
+.addButton {
+  /* margin-bottom: 20px; */
+  margin-left: -100px;
+  text-align: right;
+  position: fixed;
+}
+
+.addButton .add-icon {
+  display: inline-block;
+  text-decoration: none;
+  background-color: #141d28; 
+  color: white; 
+  padding: 20px;
+  border-radius: 10px;
+  font-size: 20px;
+  transition: all 0.3s ease;
+}
+
+.addButton .add-icon:hover {
+  background-color: #1d2735;
+  transform: scale(1.1);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+table th, table td {
+  text-align: left;
+  padding: 12px;
+  border: 1px solid #ddd;
+}
+
+table th {
+  background-color: #141d28;
+  color: white;
+  text-transform: uppercase;
+}
+
+table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+table tr:hover {
+  background-color: #f1f1f1;
+}
+
+table a {
+  text-decoration: none;
+  color: #141d28;
+}
+
+table a:hover {
+  text-decoration: underline;
+}
+
+.fa-pen-to-square {
+  color: green;
+  font-size: 1.5rem;
+}
+.fa-trash {
+  color: red;
+  font-size: 1.5rem;
+  transition: color 0.3s ease;
+}
+
+
+/* .container {
+  padding-top: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.container table {
+  padding: 20px;
+  border: none;
+}
+
+table:first-child() {
+  background-color: gray;
+}
+
+table th {
+  font-size: 1.5rem;
+}
+
+.addButton {
+  border: 1px solid black;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #141d28;
+  border-radius: 5px;
+  position: relative;
+}
+
+.addButton a i {
+  color: #fff;
+  font-size: 2rem;
+} */

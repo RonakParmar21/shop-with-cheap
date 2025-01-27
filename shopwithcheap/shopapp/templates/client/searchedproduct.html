@@ -5,13 +5,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shop With Cheap</title>
+    <title>Search Products</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <link rel="stylesheet" href="{% static 'client/css/style.css' %}">
 </head>
 <body>
     {% include "client/navbar.html" %}
-    {% comment %} {% include "client/slider.html" %} {% endcomment %}
-    
     <section class="product-section">
         {% for product in products %}
         <div class="product-card">
@@ -20,13 +19,14 @@
             <p>{{product.description}}</p>
             <div class="price">${{product.price}}</div>
             <div class="icons">
-                <button>View Details</button>
+                <button>Add to Cart</button>
+                <button>Wishlist</button>
+                <button>Buy Now</button>
             </div>
         </div>
         {% endfor %}
     </section>
-
+    
     {% include "client/footer.html" %}
-    <script src="{% static 'client/js/script.js' %}"></script>
 </body>
 </html>

@@ -16,16 +16,6 @@ li {
   list-style-type: none;
 }
 
-/*
-color :- 
-    - #141D28
-    - #4A628A
-    - #7AB2D3
-    - #B9E5E8
-    - #DFF2EB
-    - #FFF
-*/
-
 nav {
   display: flex;
   justify-content: space-between;
@@ -44,6 +34,7 @@ nav h1 a {
   text-decoration: none;
   color: #fff;
   font-size: 1.8rem;
+  font-weight: 900;
 }
 
 nav ul {
@@ -58,6 +49,34 @@ nav ul li a {
   color: white;
   text-decoration: none;
   font-size: 1rem;
+}
+
+/* Dropdown Styles */
+nav ul li.dropdown {
+  position: relative;
+}
+
+nav ul li.dropdown .dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #4a628a;
+  min-width: 160px;
+  z-index: 1;
+}
+
+nav ul li.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+nav ul li.dropdown .dropdown-content a {
+  color: white;
+  padding: 10px;
+  text-decoration: none;
+  display: block;
+}
+
+nav ul li.dropdown .dropdown-content a:hover {
+  background-color: #7ab2d3;
 }
 
 #cross,
@@ -92,6 +111,7 @@ nav ul li a {
     display: block;
   }
 }
+
 
 /* slider css */
 .slide {
@@ -315,4 +335,172 @@ form button {
 form a {
   text-align: center;
   font-size: 1.4rem;
+}
+
+
+/* contact form design */
+.error {
+  color: red;
+  font-size: 0.9rem;
+}
+.form-group {
+  margin-bottom: 15px;
+}
+.form-group label {
+  display: block;
+  font-weight: bold;
+}
+.form-group input, .form-group textarea {
+  width: 100%;
+  padding: 10px;
+  font-size: 1rem;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+.form-group button {
+  background-color: #4a628a;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+.form-group button:hover {
+  background-color: #4a628a;
+}
+
+.contact-container {
+  padding-top: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.contact-container form {
+  width: 400px;
+}
+
+.product-section {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* Always display 4 products per row */
+  gap: 20px;
+  padding: 20px;
+  padding-top: 80px;
+  justify-content: center; /* Center-align smaller rows */
+}
+
+
+.product-card {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  padding: 15px;
+}
+
+.product-card img {
+  width: 100%;
+  height: 300px;
+  object-fit: fill;
+  border-bottom: 1px solid #ddd;
+}
+
+.product-card h3 {
+  font-size: 1.2rem;
+  margin: 10px 0;
+}
+
+.product-card p {
+  font-size: 1rem;
+  color: #666;
+}
+
+.product-card .price {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.product-card .icons {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.product-card .icons button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.product-card .icons button:hover {
+  background-color: #0056b3;
+}
+
+@media (max-width: 1024px) {
+  .product-section {
+      grid-template-columns: repeat(2, 1fr); /* 2 products per row on medium screens */
+  }
+}
+
+@media (max-width: 768px) {
+  .product-section {
+      grid-template-columns: 1fr; /* 1 product per row on small screens */
+  }
+}
+
+
+
+/* Product Detail Page Styles */
+.product-detail {
+  padding: 20px;
+}
+
+.product-info {
+  display: flex;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.product-image {
+  width: 300px;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.product-details {
+  max-width: 500px;
+}
+
+.product-details h3 {
+  font-size: 2rem;
+  color: #4a628a;
+}
+
+.product-details p {
+  font-size: 1.2rem;
+  margin: 10px 0;
+}
+
+.add-to-cart-btn {
+  padding: 10px 20px;
+  background-color: #4a628a;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2rem;
+  border-radius: 5px;
+}
+
+.add-to-cart-btn:hover {
+  background-color: #7AB2D3;
 }

@@ -18,14 +18,12 @@
     <div>
         {% include "swc/navbar.html" %}
     </div>
-    {% comment %} {% include "swc/navbar.html" %} {% endcomment %}
     <div class="form-container">
         <div class="center-div">
-            <form method="POST" action="{% url 'addproduct' %}">
+            <form method="POST" action="{% url 'addproduct' %}" enctype="multipart/form-data">
                 {% csrf_token %}
                 <h2>Add Product</h2>
 
-                <!-- Category Dropdown -->
                 <div class="input-field">
                     <label for="category">Select Category:</label>
                     <select name="category" id="category" required>
@@ -36,7 +34,6 @@
                     </select>
                 </div>
 
-                <!-- Subcategory Dropdown -->
                 <div class="input-field">
                     <label for="subcategory">Select Subcategory:</label>
                     <select name="subcategory" id="subcategory" required>

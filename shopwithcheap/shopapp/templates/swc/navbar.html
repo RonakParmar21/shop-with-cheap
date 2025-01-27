@@ -10,13 +10,14 @@
   <i class="fa-solid fa-times" id="cross"></i>
   <i class="fa-solid fa-bars" id="bar"></i>
   <ul>
-    <li><a href="#">Dashboard</a></li>
+    <li><a href="">Dashboard</a></li>
     <li><a href="{% url "addcategory" %}">Add Category</a></li>
-    <li><a href="#">Show Category</a></li>
+    <li><a href="{% url "viewcategory" %}">Show Category</a></li>
     <li><a href="{% url "addsubcategory" %}">Add SubCategory</a></li>
-    <li><a href="#">Show SubCategory</a></li>
+    <li><a href="{% url "viewsubcategory" %}">Show SubCategory</a></li>
     <li><a href="{% url "addproduct" %}">Add Product</a></li>
-    <li><a href="#">Show Product</a></li>
+    <li><a href="{% url "viewproduct" %}">Show Product</a></li>
+    <li><a href="{% url "contactdetails" %}">Show Contact</a></li>
     <li><a href="">Logout</a></li>
   </ul>
 </nav>
