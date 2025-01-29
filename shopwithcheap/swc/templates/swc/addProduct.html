@@ -1,0 +1,99 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SWC - Add Product</title>
+    <link rel="stylesheet" href="{% static "swc/css/style.css" %}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <script>
+        {% if success %}
+            alert("Product added successfully!");
+        {% endif %}
+    </script>
+    <div>
+        {% include "swc/navbar.html" %}
+    </div>
+    <div class="form-container">
+        <div class="center-div">
+            <form method="POST" action="{% url 'addproduct' %}" enctype="multipart/form-data">
+                {% csrf_token %}
+                <h2>Add Product</h2>
+
+                <div class="input-field">
+                    <label for="category">Select Category:</label>
+                    <select name="category" id="category" required>
+                        <option value="" disabled selected>-- Select Category --</option>
+                        {% for category in categories %}
+                            <option value="{{ category.0 }}">{{ category.1 }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="input-field">
+                    <label for="subcategory">Select Subcategory:</label>
+                    <select name="subcategory" id="subcategory" required>
+                        <option value="" disabled selected>-- Select Subcategory --</option>
+                    </select>
+                </div>
+
+                <div class="input-field">
+                    <label for="product_name">Enter Product Name:</label>
+                    <input type="text" name="product_name" id="product_name" placeholder="Enter product name" required>
+                </div>
+
+                <div class="input-field">
+                    <label for="productdescription">Enter Product Description:</label>
+                    <textarea rows="3" cols="2" name="productdescription" id="productdescription" placeholder="Enter product description">
+                    </textarea>
+                </div>
+
+                <div class="input-field">
+                    <label for="productprice">Enter Product Price:</label>
+                    <input type="text" name="productprice" id="productprice" placeholder="Enter product price" required />
+                </div>
+
+                <div class="input-field">
+                    <label for="productqty">Enter Product Quantity:</label>
+                    <input type="text" name="productqty" id="productqty" placeholder="Enter product quantity" required />
+                </div>
+
+                <div class="input-field">
+                    <label for="productimage">Enter Product Image:</label>
+                    <input type="file" name="productimage" id="productimage" accept="image/*" required />
+                </div>
+
+                <button type="submit">Add Product</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            $('#category').change(function () {
+                const category = $(this).val();
+
+                $('#subcategory').empty().append('<option value="" disabled selected>-- Select Subcategory --</option>');
+
+                if (category) {
+                    $.ajax({
+                        url: '{% url "get_subcategories" %}',
+                        method: 'GET',
+                        data: { category: category },
+                        success: function (response) {
+                            const subcategories = response.subcategories;
+                            subcategories.forEach(subcategory => {
+                                $('#subcategory').append(`<option value="${subcategory.id}">${subcategory.name}</option>`);
+                            });
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
