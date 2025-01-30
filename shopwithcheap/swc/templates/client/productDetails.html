@@ -27,7 +27,7 @@
 
     <section class="detailProduct">
       <div class="left">
-        <img src="{% static product.image %}" alt="{{ product.name }}" />
+        <img src="{{ MEDIA_URL }}{{ product.image }}" alt="Product Image">
       </div>
       <div class="right">
         <h1>{{ product.name }}</h1>

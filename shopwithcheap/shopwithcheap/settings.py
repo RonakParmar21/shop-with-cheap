@@ -126,8 +126,8 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'swc/static'),
 ]
 
-MEDIA_URL = '/media/'  # This is the URL where media files will be accessible
-MEDIA_ROOT = os.path.join(BASE_DIR, 'swc/static/images')  # This is where the uploaded images are stored
+MEDIA_URL = 'swc/static/images/'  # URL for serving media files
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # This is where the uploaded images are stored
 # IMAGE_STORAGE_PATH = os.path.join(BASE_DIR, 'swc/static/images')
 
 # IMAGE_STORAGE_PATH = os.path.join(BASE_DIR, 'shopapp/static/images')

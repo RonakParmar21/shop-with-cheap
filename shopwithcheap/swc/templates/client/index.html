@@ -15,7 +15,10 @@
     <section class="product-section">
         {% for product in products %}
         <div class="product-card">
-            <img src="{% static product.image %}" alt="{{ product.product }}" >
+            {% comment %} <img src="{% static product.image %}" alt="{{ product.image }}" > {% endcomment %}
+            <img src="{{ MEDIA_URL }}{{ product.image }}" alt="Product Image">
+
+
             <h3>{{product.name}}</h3>
             <p>{{product.description}}</p>
             <div class="price">${{product.price}}</div>

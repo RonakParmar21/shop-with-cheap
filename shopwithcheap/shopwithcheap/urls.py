@@ -28,7 +28,10 @@ urlpatterns = [
     path('swc/delete-category/<int:id>/', views.DeleteCategory, name="deletecategory"),
     path('swc/delete-subcategory/<int:id>/', views.DeleteSubCategory, name="deletesubcategory"),
     path('swc/delete-product/<int:id>/', views.DeleteProduct, name="deleteproduct"),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) 
+
+# urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+# + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 # if settings.DEBUG:
 #     urlpatterns += static(settings.STATIC_URL, document_root=os.path.join(settings.BASE_DIR, 'swc/static/'))

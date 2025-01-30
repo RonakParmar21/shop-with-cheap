@@ -27,7 +27,7 @@ def Index(request):
 
     categories = get_categories() 
 
-    return render(request, 'client/index.html', {'products': products, 'categories': categories})
+    return render(request, 'client/index.html', {'products': products, 'categories': categories, "MEDIA_URL": settings.MEDIA_URL})
 
 def check_user_credentials(email, password):
     query = """
@@ -186,7 +186,7 @@ def product_detail(request, id):
     else:
         out_of_stock = False
     categories = get_categories() 
-    return render(request, 'client/productDetails.html', {'product': product, 'categories': categories, 'out_of_stock': out_of_stock})
+    return render(request, 'client/productDetails.html', {'product': product, 'categories': categories, 'out_of_stock': out_of_stock, "MEDIA_URL": settings.MEDIA_URL})
 
 def Contact(request):
     if 'user_email' not in request.session:
@@ -303,16 +303,18 @@ def AddProduct(request):
         productqty = request.POST.get('productqty')
         productimage = request.FILES.get('productimage')
         if productimage:
-            image_folder = os.path.join(settings.BASE_DIR, 'swc/static/images/products')
+            image_path = os.path.join(settings.MEDIA_ROOT, "products", productimage.name)
+            os.makedirs(os.path.dirname(image_path), exist_ok=True)
+            # image_folder = os.path.join(settings.BASE_DIR, 'swc/static/images/products')
             # image_folder = os.path.join(settings.MEDIA_ROOT, 'products')  
-            os.makedirs(image_folder, exist_ok=True)  
-            image_path = os.path.join(image_folder, productimage.name)
+            # os.makedirs(image_folder, exist_ok=True)  
+            # image_path = os.path.join(image_folder, productimage.name)
 
             with open(image_path, 'wb') as f:
                 for chunk in productimage.chunks():
                     f.write(chunk)
 
-            image_relative_path = f'images/product/{productimage.name}'
+            image_relative_path = f'/products/{productimage.name}'
 
         query = """
             INSERT INTO product (category, subcategory, productname, productdescription, productprice, productqty, productimage)
